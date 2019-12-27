@@ -26,7 +26,7 @@ public class AboutUsFragment extends Fragment {
     {
         View v = inflater.inflate(R.layout.fragment_about_us,container,false);
 
-        webView = v.findViewById(aboutUs);
+        webView = v.findViewById(R.id.aboutUs);
         progressBar = v.findViewById(R.id.progress);
         webView.setWebViewClient(new WebViewClient(){
             @Override
