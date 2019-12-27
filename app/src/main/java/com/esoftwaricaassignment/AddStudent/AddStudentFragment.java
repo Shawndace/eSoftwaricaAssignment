@@ -1,85 +1,115 @@
 package com.esoftwaricaassignment.AddStudent;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.esoftwaricaassignment.Adapter.StudentAdapter;
+import com.esoftwaricaassignment.HomeActivity;
 import com.esoftwaricaassignment.Model.Students;
+import com.esoftwaricaassignment.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AddStudentFragment extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
-    Context mContext;
-    List<Students> studentsList;
+public class AddStudentFragment extends Fragment {
 
+    public static List<Students> studentsList = new ArrayList<>();
+    //List<Students> studentsList;
+    private EditText etStudentName, etStudentAge,etStudentAddress;
+    private RadioGroup Gender;
+    private RadioButton rbtnMale,rbtnFemale,rbtnOther;
+    private Button Register;
+    private int Image, age;
+    private String name, address, gender;
 
-    public StudentAdapter(Context mContext,List<Students> studentsList){
-        this.mContext = mContext;
-        this.studentsList = studentsList;
-    }
-
-    @NonNull
+    @Nullable
     @Override
-    public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.students_view,parent,false);
-        return new StudentViewHolder(view);
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_add_student,container,false);
+        etStudentName=view.findViewById(R.id.studentName);
+        etStudentAge=view.findViewById(R.id.studentAge);
+        etStudentAddress = view.findViewById(R.id.studentAddress);
+        Gender = view.findViewById(R.id.selectGender);
+        rbtnMale = view.findViewById(R.id.rdoMale);
+        rbtnFemale = view.findViewById(R.id.rdoFemale);
+        rbtnOther = view.findViewById(R.id.rdoOthers);
+        Register = view.findViewById(R.id.btnRegistration);
 
-    @Override
-    public void onBindViewHolder(@NonNull StudentAdapter.StudentViewHolder holder, final int i) {
-        final Students students = studentsList.get(i);
-        holder.name.setText(students.getName());
-        holder.age.setText(String.format("%d", students.getAge()));
-        holder.gender.setText(students.getGender());
-        holder.address.setText(students.getAddress());
-        holder.image.setImageResource(students.getImageId());
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+        final int[] image = {R.drawable.boy, R.drawable.girl, R.drawable.other};
+        Register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext.getApplicationContext(), students.getName()+" "+ "is Deleted!",Toast.LENGTH_LONG).show();
-                studentsList.remove(i);
-                notifyDataSetChanged();
+            public void onClick(View v) {
+                //Validation
+                if(etStudentName.getText().toString().matches("")){
+                    etStudentName.setError("Enter Student Name");
+                    return;
+                }
+
+                if(etStudentAge.getText().toString().matches("")){
+                    etStudentAge.setError("Enter Student Age");
+                    return;
+                }
+                if(etStudentAddress.getText().toString().matches("")){
+                    etStudentAddress.setError("Enter Student Address");
+                    return;
+                }
+
+                name = etStudentName.getText().toString();
+                address = etStudentAddress.getText().toString();
+                age = Integer.parseInt(etStudentAge.getText().toString());
+
+
+                try {
+                    int selectGender = Gender.getCheckedRadioButtonId();
+                    RadioButton radioButton = view.findViewById(selectGender);
+                    gender = radioButton.getText().toString();
+                    if (gender.equals("Male")) {
+                        Image = image[0];
+                    } else if (gender.equals("Female")) {
+                        Image = image[1];
+                    } else if (gender.equals("Others")) {
+                        Image = image[2];
+                    }
+//                else if(gender.matches(""))
+//                {
+//                    Toast.makeText(getActivity(), "Please select gender", Toast.LENGTH_LONG).show();
+//                }
+//                else{
+//                    Toast.makeText(getActivity(), "Please select gender", Toast.LENGTH_LONG).show();
+//                }
+                    Students students = new Students(name, address, gender, age, Image);
+                    studentsList = HomeActivity.studentsList;
+                    studentsList.add(students);
+                    Toast.makeText(getActivity(),"Student registration successful",Toast.LENGTH_LONG).show();
+                    etStudentName.getText().clear();
+                    etStudentAddress.getText().clear();
+                    etStudentAge.getText().clear();
+                    Gender.clearCheck();
+
+                }
+                catch(Exception e) {
+                    Toast.makeText(getActivity(), "Please select gender", Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext.getApplicationContext(), "My name is"+ ' '+students.getName(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return studentsList.size();
-    }
-
-    public class StudentViewHolder extends RecyclerView.ViewHolder {
-
-        TextView name, age, address,gender;
-        ImageView image;
-        Button btnDelete;
-
-        public StudentViewHolder(View itemView) {
-            super(itemView);
-
-            name = itemView.findViewById(R.id.name);
-            age = itemView.findViewById(R.id.age);
-            address = itemView.findViewById(R.id.address);
-            gender = itemView.findViewById(R.id.gender);
-            image = itemView.findViewById(R.id.imgProfile);
-            btnDelete = itemView.findViewById(R.id.delete);
-
-        }
+        return view;
     }
 }

@@ -7,6 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.esoftwaricaassignment.AboutUs.AboutUsFragment;
+import com.esoftwaricaassignment.AddStudent.AddStudentFragment;
+import com.esoftwaricaassignment.Home.HomeFragment;
+import com.esoftwaricaassignment.Model.Students;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,4 +64,4 @@ public class HomeActivity extends AppCompatActivity {
                 }
             };
 }
-}
+

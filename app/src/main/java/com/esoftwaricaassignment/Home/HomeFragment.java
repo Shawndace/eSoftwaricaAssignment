@@ -8,7 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.esoftwaricaassignment.Adapter.StudentAdapter;
+import com.esoftwaricaassignment.HomeActivity;
+import com.esoftwaricaassignment.R;
 
 public class HomeFragment extends Fragment {
 
