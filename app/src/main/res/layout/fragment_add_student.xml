@@ -25,7 +25,6 @@
         android:id="@+id/studentName"
         android:textSize="20sp"
         android:hint="Name of Student"
-        android:background="@drawable/edit_text"
         android:layout_margin="10dp"
         android:padding="10dp"/>
 
@@ -35,7 +34,6 @@
         android:id="@+id/studentAge"
         android:textSize="20sp"
         android:hint="Age of Student"
-        android:background="@drawable/edit_text"
         android:inputType="number"
         android:layout_margin="10dp"
         android:padding="10dp"
@@ -86,7 +84,6 @@
         android:id="@+id/studentAddress"
         android:textSize="20sp"
         android:hint="Address of Student"
-        android:background="@drawable/edit_text"
         android:layout_margin="10dp"
         android:padding="10dp"
         />

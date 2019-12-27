@@ -34,8 +34,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
         studentsList = new ArrayList<>();
-        studentsList.add(new Students("Uttam Tamang","Nuwakot","Male",22,R.drawable.boy));
-        studentsList.add(new Students("Gal Gadot","Kathmandu","Female",21,R.drawable.girl));
+        studentsList.add(new Students("Sandesh K.C","Kalanki","Male",22,R.drawable.boy));
+        studentsList.add(new Students("Girl gal","Kathmandu","Female",21,R.drawable.girl));
 
 
     }
